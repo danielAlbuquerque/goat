@@ -1,0 +1,141 @@
+<%= render "shared/error_messages", target: @member %>
+
+<p>
+<%= form.label :cim %><br />
+<%= form.text_field :cim %>
+</p>
+
+<p>
+<%= form.label :first_name %><br />
+<%= form.text_field :first_name %>
+</p>
+
+<p>
+<%= form.label :last_name %><br />
+<%= form.text_field :last_name %>
+</p>
+
+<p>
+<%= form.label :email %><br />
+<%= form.text_field :email %>
+</p>
+
+<p>
+<%= form.label :secondary_email %><br />
+<%= form.text_field :secondary_email %>
+</p>
+
+<p>
+<%= form.label :cpf %><br />
+<%= form.text_field :cpf %>
+</p>
+
+<p>
+<%= form.label :rg %><br />
+<%= form.text_field :rg %>
+</p>
+
+<p>
+<%= form.label :birth_date %><br />
+<%= form.text_field :birth_date %>
+</p>
+
+<p>
+<%= form.label :workplace_company %><br />
+<%= form.text_field :workplace_company %>
+</p>
+
+<p>
+<%= form.label :profession_company %><br />
+<%= form.text_field :profession_company %>
+</p>
+
+<p>
+<%= form.label :degree_id %><br />
+<%= form.text_field :degree_id %>
+</p>
+
+<p>
+<%= form.label :initiation_date %><br />
+<%= form.text_field :initiation_date %>
+</p>
+
+<p>
+<%= form.label :monthly_payment %><br />
+<%= form.text_field :monthly_payment %>
+</p>
+
+<p>
+<%= form.label :day_monthly_payment %><br />
+<%= form.text_field :day_monthly_payment %>
+</p>
+
+<p>
+<%= form.label :marital_status %><br />
+<%= form.text_field :marital_status %>
+</p>
+
+<p>
+<%= form.label :phone1 %><br />
+<%= form.text_field :phone1 %>
+</p>
+
+
+
+
+
+<p>
+<%= form.label :birth_uf %><br />
+<%= form.text_field :birth_uf %>
+</p>
+
+<p>
+<%= form.label :birth_city %><br />
+<%= form.text_field :birth_city %>
+</p>
+
+
+<p>
+<%= form.label :address_uf %><br />
+<%= form.text_field :address_uf %>
+</p>
+
+<p>
+<%= form.label :address_city %><br />
+<%= form.text_field :address_city %>
+</p>
+
+<p>
+<%= form.label :neighborhood %><br />
+<%= form.text_field :neighborhood %>
+</p>
+
+<p>
+<%= form.label :address_number %><br />
+<%= form.text_field :address_number %>
+</p>
+
+<p>
+<%= form.label :address %><br />
+<%= form.text_field :address %>
+</p>
+
+<p>
+<%= form.label :complement %><br />
+<%= form.text_field :complement %>
+</p>
+
+<p>
+<%= form.label :zipcode %><br />
+<%= form.text_field :zipcode %>
+</p>
+
+
+<p>
+<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
+<%= form.password_field :password %>
+</p>
+<p>
+<%= form.label :password_confirmation %><br />
+<%= form.password_field :password_confirmation %>
+</p>

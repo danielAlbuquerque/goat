@@ -5,4 +5,6 @@ class EvolutionGrade < ActiveRecord::Base
 
   validates_presence_of :degree
   validates_presence_of :member
+
+  acts_as_paranoid
 end

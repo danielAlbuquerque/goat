@@ -13,6 +13,6 @@ class CashFlow < ActiveRecord::Base
   validates :value, presence: true
   validates :description, presence: true, length: {in: 2..30}
   
-
+  acts_as_paranoid
 
 end

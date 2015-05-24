@@ -10,6 +10,7 @@ class Member < ActiveRecord::Base
   has_many :bill_to_pays
   has_many :bill_to_receives
   has_and_belongs_to_many :sessions
+  acts_as_paranoid
 
   # Presence, Unique and length
   validates :cim, length: {in: 2..25}, presence: true, uniqueness: true
@@ -44,5 +45,22 @@ class Member < ActiveRecord::Base
   # Email Format validation
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_format_of :secondary_email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+
+
+  #Authlogic
+  acts_as_authentic do |c|
+    c.session_class = MemberSession
+    c.login_field = 'cim'
+    c.crypto_provider = Authlogic::CryptoProviders::BCrypt
+  end
+
+  def self.current
+    Thread.current[:member]
+  end
+
+  def self.current=(member)
+    Thread.current[:member] = member
+  end
+
 
 end

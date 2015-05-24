@@ -6,4 +6,6 @@ class Dependent < ActiveRecord::Base
   validates :rg, presence: true, length: {in: 6..8}
   validates :cpf, presence: true, length: {in: 11..14}
   validates_presence_of :birth_date
+
+  acts_as_paranoid
 end
