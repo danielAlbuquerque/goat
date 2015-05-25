@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523160908) do
+ActiveRecord::Schema.define(version: 20150524200139) do
 
   create_table "access_denieds", force: :cascade do |t|
     t.integer  "member_id",  limit: 4
@@ -271,6 +271,7 @@ ActiveRecord::Schema.define(version: 20150523160908) do
     t.datetime "updated_at",                                                     null: false
     t.datetime "deleted_at"
     t.boolean  "is_admin",            limit: 1,                  default: false
+    t.string   "avatar",              limit: 100
   end
 
   add_index "members", ["active"], name: "index_members_on_active", using: :btree

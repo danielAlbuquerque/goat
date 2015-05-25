@@ -1,0 +1,28 @@
+            <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>CIM</th>
+                        <th>Nome</th>
+                        <th>Grau</th>
+                        <th>Situação</th>
+                        <th>Opções</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <%@members.each do |m|%>
+                      <tr>
+                        <td><%=m.cim%></td>
+                        <td><%=m.first_name%> <%=m.last_name%></td>
+                        <td><%=m.degree.description%></td>
+                        <%
+                          status = "ativo"
+                          status = "afastado" unless m.active
+                        %>
+                        <td><%=status%></td>
+                        <td></td>
+                      </tr>
+                      <% end %>
+
+                    </tbody>
+
+                  </table>

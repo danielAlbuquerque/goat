@@ -15,7 +15,7 @@ class CreateMembers < ActiveRecord::Migration
       t.belongs_to :degree, index: true, null: false, foreign_key: true
       t.date :initiation_date, null: false
       t.boolean :active, default: true, index: true
-      t.decimal :monthly_payment, null: false, index: true
+      t.decimal :monthly_payment, null: false, index: true, precision: 6, scale: 2
       t.integer :day_monthly_payment, null: false, index: true
       t.belongs_to :position_held, index: true, foreign_key: true
       t.string :marital_status, null: false, limit: 20

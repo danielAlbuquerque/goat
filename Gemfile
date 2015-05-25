@@ -9,6 +9,9 @@ gem "paperclip", "~> 4.2"
 gem 'carrierwave'
 gem 'acl9', '~> 2.0'
 gem "paranoia", "~> 2.0"
+gem 'mini_magick'
+
+
 
 gem 'will_paginate', '~> 3.0.0'
 gem 'mini_magick'

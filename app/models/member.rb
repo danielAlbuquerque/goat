@@ -1,4 +1,11 @@
 class Member < ActiveRecord::Base
+
+  #Avatar
+  mount_uploader :avatar, AvatarUploader
+
+  #Callbacks
+  before_create :set_avatar
+
   # Relationships
   belongs_to :degree
   belongs_to :position_held
@@ -60,6 +67,10 @@ class Member < ActiveRecord::Base
 
   def self.current=(member)
     Thread.current[:member] = member
+  end
+
+  def set_picture
+    avatar = "/content/dist/img/user2-160x160.jpg"  unless avatar
   end
 
 

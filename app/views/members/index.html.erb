@@ -1,0 +1,38 @@
+<script type="text/javascript">
+  JQuery
+</script>
+
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Membros
+      <small>cadastro de membros</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Membros</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Membros da loja</h3>
+                  <div class="pull-right">
+                    <%= link_to "Novo", "/novo-membro", class: "btn btn-primary" %>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+
+                    <%= render @members%>
+
+                </div>
+              </div>
+            </div>
+          </div>
+  </section>
+
+</div>

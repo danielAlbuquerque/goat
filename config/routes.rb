@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   get 'home/index'
 
   #resources
-  resource :member_session, only: [:create, :new, :destroy]  
+  resource :member_session, only: [:create, :new, :destroy]
 
-  
+
   #Root route
   root 'home#index'
 
@@ -23,5 +23,13 @@ Rails.application.routes.draw do
   resource :member, as: 'account'
   get 'signup' => 'users#new', as: :signup
 
- 
+
+
+
+  #Custom routes
+
+  #Members
+  get 'membros' => "members#index", as: :membros
+  get 'novo-membro' => 'members#new', as: "novo-mebro"
+
 end

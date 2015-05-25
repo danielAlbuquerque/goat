@@ -3,6 +3,7 @@ class MemberSessionsController < ApplicationController
   before_filter :require_login, only: :destroy
 
   def new
+    redirect_to root_path if current_member
   	@member_session = MemberSession.new
   end
 
@@ -11,7 +12,7 @@ class MemberSessionsController < ApplicationController
   	if @member_session.save
   		redirect_to root_path
   	else
-  		redirect_to login_path
+  		redirect_to login_path, notice: "Login inválido"
   	end
   end
 

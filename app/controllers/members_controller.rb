@@ -7,6 +7,10 @@ class MembersController < ApplicationController
 		@member = Member.new
 	end
 
+	def index
+		@members = Member.order :first_name
+	end
+
 	def create
 		@member = Member.new member_params
 		if @member.save

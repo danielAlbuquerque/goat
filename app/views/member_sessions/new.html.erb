@@ -1,13 +1,37 @@
-<h1>Login</h1>
-<%= form_for @member_session, as: :member_session, url: { action: "create" } do |f| %>
-  <%= render "shared/error_messages", target: @member_session %>
-  <%= f.label :cim %><br />
-  <%= f.text_field :cim %><br />
-  <br />
-  <%= f.label :password %><br />
-  <%= f.password_field :password %><br />
-  <br />
-  <%= f.check_box :remember_me %><%= f.label :remember_me %><br />
-  <br />
-  <%= f.submit "Login" %>
-<% end %>
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="#"><b>SiS</b>BODE</a>
+      </div><!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg">Faça login para acessar o sistema</p>
+        <%= form_for @member_session, as: :member_session, url: { action: "create" } do |f| %>
+
+          <% if notice %>
+          <div class="callout callout-warning">
+            <p>Usuário e/ou senha inválida(s)</p>
+          </div>
+          <% end %>
+
+          <div class="form-group has-feedback">
+            <%= f.text_field :cim, class: "form-control", placeholder: "Informe seu CIM...", required: true %>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <%= f.password_field :password, class: "form-control", placeholder: "Informe sua senha...", required: true %>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck">
+                <label>
+                  <a href="/reset-password">Esqueceu sua senha?</a><br>
+                </label>
+              </div>
+            </div><!-- /.col -->
+            <div class="col-xs-4">
+              <%= f.submit "Entrar", class: "btn btn-primary btn-block btn-flat" %>
+            </div><!-- /.col -->
+          </div>
+        <% end %>
+      </div><!-- /.login-box-body -->
+    </div><!-- /.login-box -->
