@@ -69,7 +69,7 @@ class Member < ActiveRecord::Base
     Thread.current[:member] = member
   end
 
-  def set_picture
+  def set_avatar
     avatar = "/content/dist/img/user2-160x160.jpg"  unless avatar
   end
 

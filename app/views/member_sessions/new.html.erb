@@ -7,8 +7,8 @@
         <%= form_for @member_session, as: :member_session, url: { action: "create" } do |f| %>
 
           <% if notice %>
-          <div class="callout callout-warning">
-            <p>Usuário e/ou senha inválida(s)</p>
+          <div class="callout callout-success">
+            <p><%=notice%></p>
           </div>
           <% end %>
 

@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_member
 
   private
-
-
     #Auth
   	def current_member_session
   		@current_member_session ||= MemberSession.find
@@ -18,7 +16,7 @@ class ApplicationController < ActionController::Base
     def require_login
       unless current_member
         store_location
-        return redirect_to login_url, notice: "Você precisa estar logado para acessar o sistema"
+        return redirect_to login_url
       end
     end
 
