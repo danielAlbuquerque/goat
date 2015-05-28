@@ -1,0 +1,186 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>
+      Caixa
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Caixa</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+              <!-- Custom Tabs -->
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_1" data-toggle="tab">Caixa atual</a></li>
+                  <% if @current %>
+                  <li><a href="#tab_2" data-toggle="tab">Lançamento avulso</a></li>
+                  <% end %>
+                  <li><a href="#tab_3" data-toggle="tab">Caixas anteriores</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    <% if @current.present? %>
+                      <p><b>Descrição:</b> <%= @current.description %></p>
+                      <% if @current.obs %>
+                      <p><b>Observação:</b> <%= @current.obs%></p>
+                      <% end %>
+                      <p><b>Data abertura:</b> <%= format_date_time @current.created_at%></p>
+                      <p><b>Saldo Atual:</b> <%= @current.current_cash %> R$</p>
+                      <a href="#close_modal" class="btn btn-default" data-toggle="modal">Fechamento de caixa</a>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="close_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="myModalLabel"><center>Fechamento</center></h4>
+                            </div>
+                            <div class="modal-body">
+                              <center><h2>Confirma o fechamento do caixa?</h2></center>
+                              <center><h3><b>Saldo em caixa:</b> <%= @current.current_cash %> R$</h3></center>
+
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Não</button>
+                              <a href="/cashiers/close" class="btn btn-primary">Confirmar</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr>
+
+                      <div class="row">
+                        <div class="col-xs-12">
+                          <div class="box">
+                            <div class="box-header">
+                              <h3 class="box-title">Lançamentos</h3>
+                            </div><!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                              <%if @current.cash_flows.present?%>
+                                <table class="table table-hover table-striped">
+                                  <tr>
+                                    <th>Data</th>
+                                    <th>Valor</th>
+                                    <th>Tipo</th>
+                                    <th>Membro</th>
+                                    <th>Descrição</th>
+                                  </tr>
+
+                                  <% @current.cash_flows.each do |flow| %>
+                                    <tr>
+                                      <td><%=format_date flow.when if flow.when.present?%></td>
+                                      <td>R$ <%=flow.value %></td>
+                                      <td><%=flow.flow_type%></td>
+                                      <td><%=flow.member.cim%>(<%=flow.member.first_name%>)</td>
+                                      <td><%=flow.description%></td>
+                                    </tr>
+                                  <% end %>
+                                </table>
+                              <% else %>
+                                <div class="alert alert-success">
+                                  Nenhum lançamento encontrado
+                                </div>
+                              <% end %>
+                            </div><!-- /.box-body -->
+                          </div><!-- /.box -->
+                        </div>
+                      </div>
+
+                    <% else %>
+                      <div class="alert alert-success">
+                        O caixa está fechado, <a href="/cashiers/open">clique aqui</a> para abrir o caixa
+                      </div>
+                    <% end %>
+                  </div><!-- /.tab-pane -->
+                  <% if @current %>
+                  <div class="tab-pane" id="tab_2">
+                    <%= form_for @cash_flow, url: "/cash_flows/create" do |f| %>
+                      <div class='box box-default color-palette-box'>
+                        <div class='box-header with-border'>
+                          <h3 class='box-title'> Informações</h3>
+                        </div>
+                        <div class='box-body'>
+                          <div class="row">
+                            <div class="col-xs-9">
+                              <%= f.label :flow_type, "Crédito", value: "true"  %>
+                              <%= f.radio_button :flow_type, 'C',  checked: true %>
+                              <%= f.label :flow_type, "Débito", value: "false" %>
+                              <%= f.radio_button :flow_type, 'D', class: "minimal-red"%>
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-xs-6">
+                              <label>Conta:</label>
+                              <%= f.collection_select :ledger_account_id, LedgerAccount.order(:description), :id, :description, {}, {class: "form-control"} %>
+                            </div>
+                            <div class="col-xs-3">
+                              <label>Valor(R$):</label>
+                              <%= f.text_field :value, class: "form-control", placeholder: "Valor..." %>
+                            </div>
+                            <div class="col-xs-3">
+                              <label>Data:</label>
+                              <%= f.text_field :when, class: "form-control", placeholder: "Data..." %>
+                            </div>
+
+
+                          </div>
+                          <div class="row">
+                            <div class="col-xs-4">
+                              <label>Membro:</label>
+                              <%= f.collection_select :member_id, Member.order(:first_name), :id, :first_name, {}, {class: "form-control"} %>
+                            </div>
+                            <div class="col-xs-8">
+                              <label>Descrição:</label>
+                              <%= f.text_field :description, class: "form-control", placeholder: "Descrição do lançamento..."%>
+                            </div>
+
+                          </div>
+                          <hr>
+                          <%= f.hidden_field :cashier_id, value: @current.id %>
+                          <%= link_to "Cancelar", :back, class: "btn btn-danger btn-flat" %>
+                          <%= f.submit "Salvar", class: "btn btn-primary btn-flat"%>
+                        </div><!-- /.box-body -->
+                      </div><!-- /.box -->
+                    <% end %>
+                  </div><!-- /.tab-pane -->
+                  <% end %>
+                  <div class="tab-pane" id="tab_3">
+                    <% if @closed.present? %>
+                      <table class="table table-hover table-striped">
+                        <tr>
+                          <th>Data abertura</th>
+                          <th>Aberto com</th>
+                          <th>Fechado com</th>
+                          <th>Descrição</th>
+                          <th>Data fechamento</th>
+                        </tr>
+
+                        <% @closed.each do |c| %>
+                          <tr>
+                            <td><%=format_date c.created_at %></td>
+                            <td>R$ <%=c.open_with_value %></td>
+                            <td>R$ <%=c.current_cash%></td>
+                            <td><%=c.description%></td>
+                            <td><%=format_date c.closed_at%></td>
+                          </tr>
+                        <% end %>
+                      </table>
+                    <% else %>
+                      <div class="alert alert-success">
+                        Nenhum caixa anterior foi encontrado
+                      </div>
+                    <% end %>
+                  </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+              </div><!-- nav-tabs-custom -->
+            </div><!-- /.col -->
+    </div>
+  </section>
+</div>

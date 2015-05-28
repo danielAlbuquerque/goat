@@ -13,6 +13,7 @@ class MembersController < ApplicationController
 	def index
 		if params[:search].present?
 			@members = Member.search(params[:search])
+			@search = params[:search]
 		else
 			@members = Member.all_members
 		end

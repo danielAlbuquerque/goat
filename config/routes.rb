@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  get 'member_sessions/new'
 
-  get 'member_sessions/create'
+  post 'cash_flows/create'
+  get 'cashiers/index'
+  post 'cashiers/open'
+  get 'cashiers/open'
+  get 'cashiers/close'
+  post 'cashiers/close'
 
-  get 'member_sessions/destroy'
-
-  get 'home/index'
 
   #resources
   resource :member_session, only: [:create, :new, :destroy]
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
   resources :members do
     resources :dependents
   end
+  resources :cashiers
 
   #Authlogic
   get 'login' => "member_sessions#new", as: :login

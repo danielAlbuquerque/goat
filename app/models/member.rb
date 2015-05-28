@@ -15,6 +15,7 @@ class Member < ActiveRecord::Base
   has_many :dependents
   has_many :olds_degree, :class_name => 'Degree', :foreign_key => 'old_degree_id'
   has_many :news_degree, :class_name => 'Degree', :foreign_key => 'new_degree_id'
+  has_many :evolution_grades
   has_many :inactive_reason
   has_many :cash_flows
   has_many :bill_to_pays
@@ -64,6 +65,7 @@ class Member < ActiveRecord::Base
   scope :inactives,   lambda { where(active: false).order(:first_name) }
   scope :all_members, lambda { order(:first_name) }
 
+
   #static methods
   def self.current
     Thread.current[:member]
@@ -74,10 +76,14 @@ class Member < ActiveRecord::Base
   end
 
   def self.search(search)
-    query = "where first_name like '%#{search}%' or
+    query = "first_name like '%#{search}%' or
             last_name like '%#{search}%' or cim like '%#{search}%'
             or cpf like '%#{search}%'"
     where(query)
+  end
+
+  def self.pendent_payments
+    
   end
 
   #public methods

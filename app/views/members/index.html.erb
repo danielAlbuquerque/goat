@@ -21,7 +21,7 @@
                   <div class="box-tools">
                     <%= form_tag('/members', method: "get") do %>
                     <div class="input-group">
-                      <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="CIM, Nome ou CPF..."/>
+                      <input type="text" name="search" class="form-control input-sm pull-right" style="width: 150px;" value="<%=@search if @search.present?%>" placeholder="CIM, Nome ou CPF..."/>
                       <div class="input-group-btn">
                         <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
                         <a href="<%=new_member_path%>" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>
@@ -31,7 +31,7 @@
                   </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-
+                  <% if @members.present? %>
                   <table class="table table-hover">
                       <thead>
                         <tr>
@@ -67,20 +67,53 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                               </button>
                               <ul class="dropdown-menu" role="menu">
-                                <li><%= link_to "Dependentes", edit_member_path(m)%></li>
+                                <li><%= link_to "Dependentes", member_dependents_path(m)%></li>
                                 <li><%= link_to "Atualizar informações", edit_member_path(m)%></li>
-                                <li><%= link_to "Resetar senha de acesso", edit_member_path(m)%></li>
-                                <li><%= link_to "Excluir registro", m, method: :delete, data: {confirm: 'Tem certeza?'} %></li>
+                                <li><a href="#password_modal" data-toggle="modal">Resetar senha de acesso</a></li>
+                                <li><%= link_to "Excluir", m, method: :delete, data: {confirm: 'Tem certeza?'} %></li>
                               </ul>
                             </div>
 
+
                           </td>
                         </tr>
+
+                        <%= form_for m do |f| %>
+                        <div class="modal" id="password_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title"><center>Resetar senha de acesso</center></h4>
+                              </div>
+                              <div class="modal-body">
+                                <%= f.label "Nova senha:" %><br />
+                                <%= f.password_field :password, class: "form-control" %>
+                                <%= f.label "Confirme a nova senha:" %><br />
+                                <%= f.password_field :password_confirmation, class: "form-control" %>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <% end %>
+
+
                         <% end %>
 
                       </tbody>
 
                     </table>
+                  <% else %>
+                    <div class="callout callout-success">
+                      <p>Nenhum resultado para a busca com <b><%=@search%></b></p>
+                    </div>
+                  <% end %>
+
+
 
 
                 </div>

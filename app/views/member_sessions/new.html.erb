@@ -1,13 +1,13 @@
     <div class="login-box">
       <div class="login-logo">
         <a href="#"><b>SiS</b>BODE</a>
-      </div><!-- /.login-logo -->
+      </div>
       <div class="login-box-body">
         <p class="login-box-msg">Faça login para acessar o sistema</p>
         <%= form_for @member_session, as: :member_session, url: { action: "create" } do |f| %>
 
           <% if notice %>
-          <div class="callout callout-success">
+          <div class="callout callout-danger">
             <p><%=notice%></p>
           </div>
           <% end %>

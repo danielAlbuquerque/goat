@@ -1,0 +1,198 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <h1>
+      Membros
+      <small>Informações do membro <b><%=@member.first_name%> <%=@member.last_name%></b></small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="/members"> Membros</a></li>
+      <li class="active">Visualizar</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <!-- Main content -->
+        <section class="invoice">
+          <!-- title row -->
+          <div class="row">
+            <div class="col-xs-12">
+              <h2 class="page-header">
+                <i class="fa fa-user"></i> <%=@member.first_name%> <%=@member.last_name%>, <%=@member.cim%>.
+                <small class="pull-right"><b>Iniciação:</b> <%= format_date @member.initiation_date%></small>
+              </h2>
+            </div><!-- /.col -->
+          </div>
+          <!-- info row -->
+          <div class="row invoice-info">
+            <div class="col-sm-4 invoice-col">
+                <b>CIM:</b> <%=@member.cim%> <br />
+                <b>Nome completo:</b> <%=@member.first_name%> <%=@member.last_name%> <br />
+                <b>RG:</b> <%=@member.rg%> <br />
+                <b>CPF:</b> <%=@member.cpf%> <br />
+                <b>Profissão:</b> <%=@member.profession_company%> <br />
+                <b>Empresa:</b> <%=@member.workplace_company%> <br />
+                <b>E-Mail principal:</b> <%=@member.email%> <br />
+                <b>E-Mail secundário:</b> <%=@member.secondary_email%> <br />
+                <b>Cadastrado em:</b> <%=format_date @member.created_at%> <br />
+              </table>
+            </div><!-- /.col -->
+            <div class="col-sm-4 invoice-col">
+              <%
+                if @member.active
+                  status = "ativo"
+                  lbl = "success"
+                else
+                  status = "afastado"
+                  lbl = "danger"
+                end
+              %>
+              <td></td>
+              <b>Status:</b> <span class="label label-<%=lbl%>"><%=status%></span> <br />
+              <b>É administrador?:</b> <%=@member.is_admin%><br />
+              <b>Grau:</b> <%=@member.degree.description%> <br />
+              <%
+                if @member.position_held.present?
+                  position_held = @member.position_held.description
+                else
+                  position_held = "não possui"
+                end
+              %>
+              <b>Cargo:</b> <%=position_held%> <br />
+              <b>Iniciação:</b> <%=format_date @member.initiation_date%> <br />
+              <b>Mensalidade:</b> <%=@member.monthly_payment%> R$ <br />
+              <b>Dia venc.:</b> <%=@member.day_monthly_payment%> <br />
+              <b>Estado civíl:</b> <%=@member.marital_status%> <br />
+              <b>Nascimento:</b> <%=format_date @member.birth_date%>(<%= Time.now.year - @member.birth_date.year %> anos) <br />
+            </div>
+            <div class="col-sm-4 invoice-col">
+              <b>Telefone 1:</b> <%=@member.phone1%> <br />
+              <b>Telefone 2:</b> <%=@member.phone2%> <br />
+              <b>UF:</b> <%=@member.address_uf%> <br />
+              <b>Município:</b> <%=@member.address_city%> <br />
+              <b>Bairro:</b> <%=@member.neighborhood%> <br />
+              <b>CEP:</b> <%=@member.zipcode%> <br />
+              <b>Endereço:</b> <%=@member.address%>, <%=@member.address_number%> <br />
+              <b>Complemento:</b> <%=@member.complement%> <br />
+              <b>Último login:</b> <%=format_date @member.last_login_at%> <br />
+            </div>
+          </div>
+          <br />
+
+          <legend>Dependentes</legend>
+
+
+          <!-- Table row -->
+          <div class="row">
+            <div class="col-xs-12 table-responsive">
+              <% if @member.dependents.present? %>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Parentesco</th>
+                    <th>RG</th>
+                    <th>CPF</th>
+                    <th>Nascimento</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @member.dependents.each do |member| %>
+                  <tr>
+                    <td><%= link_to member.full_name, edit_member_dependent_path(member.id, id: member.id) %> </td>
+                    <td><%=member.relationship%></td>
+                    <td><%=member.rg%></td>
+                    <td><%=member.cpf%></td>
+                    <td><%=format_date member.birth_date%>(<%=Time.now.year - member.birth_date.year%> anos)</td>
+                  </tr>
+                  <% end %>
+
+                </tbody>
+              </table>
+              <% else %>
+                <div class="alert alert-success">
+                    Nenhum dependente cadastro
+                </div>
+              <% end %>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+
+
+          <div class="row">
+            <%if @member.evolution_grades %>
+            <!-- accepted payments column -->
+            <div class="col-xs-6">
+              <p class="lead">Trajetória:</p>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                      <th>Anterior</th>
+                      <th>Novo</th>
+                      <th style="width: 40px">Data</th>
+                    </tr>
+                    <% @member.evolution_grades.each do |e| %>
+                    <tr>
+                      <td><%=e.old_degree.description%></td>
+                      <td><%=e.new_degree.description%></td>
+                      <td><%=format_date e.when%></td>
+                    </tr>
+                    <% end %>
+
+                  </table>
+              </div>
+            </div><!-- /.col -->
+            <% end %>
+
+            
+            <div class="col-xs-6">
+              <p class="lead">Mensalidades pendentes</p>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                    <tr>
+                      <th>Ref</th>
+                      <th>Valor</th>
+                      <th style="width: 40px">Vencimento</th>
+                    </tr>
+                    <% @member.evolution_grades.each do |e| %>
+                    <tr>
+                      <td><%=e.old_degree.description%></td>
+                      <td><%=e.new_degree.description%></td>
+                      <td><%=format_date e.when%></td>
+                    </tr>
+                    <% end %>
+
+                  </table>
+              </div>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+
+          <!-- this row will not appear when printing -->
+          <div class="row no-print">
+            <div class="col-xs-12">
+              <a href="#" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Imprimir</a>
+              <button class="btn btn-primary" ><i class="fa fa-download"></i> Gerar PDF</button>
+
+                    <div class="btn-group dropup pull-right">
+                      <%= link_to "Atualizar informações", edit_member_path(@member), class: "btn btn-default" %>
+
+                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Dependentes</a></li>
+                        <li><a href="#">Mensalidades</a></li>
+                        <li><a href="#">Evoluir</a></li>
+                        <li><a href="#">Desativar</a></li>
+                        <li class="divider"></li>
+                        <li><%= link_to "Excluir", @member, method: :delete, data: {confirm: 'Tem certeza?'} %></li>
+                      </ul>
+                    </div>
+            </div>
+          </div>
+        </section><!-- /.content -->
+    </div>
+  </section>
+</div>

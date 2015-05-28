@@ -5,6 +5,7 @@
     <title><%=@title%></title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <%= render 'shared/assets_css' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </head>
 <body class="<%=@clss%>">
     <div class="wrapper">
@@ -22,6 +23,6 @@
       <%= render 'shared/footer' if current_member %>
       <div class='control-sidebar-bg'></div>
     </div>
-    <% render 'shared/assets_js' %>
+    <%= render 'shared/assets_js' %>
 </body>
 </html>

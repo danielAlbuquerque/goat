@@ -1,0 +1,2 @@
+class BillReceiveController < ApplicationController
+end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527193747) do
+ActiveRecord::Schema.define(version: 20150528225833) do
 
   create_table "access_denieds", force: :cascade do |t|
     t.integer  "member_id",  limit: 4
@@ -85,14 +85,15 @@ ActiveRecord::Schema.define(version: 20150527193747) do
     t.integer  "cashier_id",         limit: 4,                    null: false
     t.integer  "member_id",          limit: 4,                    null: false
     t.integer  "ledger_account_id",  limit: 4,                    null: false
-    t.integer  "form_of_payment_id", limit: 4,                    null: false
-    t.string   "type",               limit: 1,                    null: false
+    t.integer  "form_of_payment_id", limit: 4
     t.decimal  "value",                            precision: 10, null: false
-    t.string   "description",        limit: 30,                   null: false
+    t.text     "description",        limit: 65535,                null: false
     t.text     "obs",                limit: 65535
     t.datetime "created_at",                                      null: false
     t.datetime "updated_at",                                      null: false
     t.datetime "deleted_at"
+    t.string   "flow_type",          limit: 1,                    null: false
+    t.date     "when",                                            null: false
   end
 
   add_index "cash_flows", ["cashier_id"], name: "index_cash_flows_on_cashier_id", using: :btree
@@ -102,13 +103,15 @@ ActiveRecord::Schema.define(version: 20150527193747) do
   add_index "cash_flows", ["member_id"], name: "index_cash_flows_on_member_id", using: :btree
 
   create_table "cashiers", force: :cascade do |t|
-    t.boolean  "opened",       limit: 1,                    default: true, null: false
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
-    t.decimal  "current_cash",               precision: 10, default: 0,    null: false
-    t.string   "description",  limit: 50,                                  null: false
-    t.text     "obs",          limit: 65535
+    t.boolean  "opened",          limit: 1,                    default: true, null: false
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.decimal  "current_cash",                  precision: 10, default: 0,    null: false
+    t.text     "description",     limit: 65535,                               null: false
+    t.text     "obs",             limit: 65535
     t.datetime "deleted_at"
+    t.datetime "closed_at"
+    t.decimal  "open_with_value",               precision: 10
   end
 
   add_index "cashiers", ["deleted_at"], name: "index_cashiers_on_deleted_at", using: :btree
@@ -208,10 +211,10 @@ ActiveRecord::Schema.define(version: 20150527193747) do
   add_index "inactive_reasons", ["when"], name: "index_inactive_reasons_on_when", using: :btree
 
   create_table "ledger_accounts", force: :cascade do |t|
-    t.boolean  "active",      limit: 1,  null: false
-    t.string   "description", limit: 50, null: false
-    t.string   "type",        limit: 1,  null: false
+    t.boolean  "active",       limit: 1,  null: false
+    t.string   "description",  limit: 50, null: false
     t.datetime "deleted_at"
+    t.string   "account_type", limit: 1,  null: false
   end
 
   add_index "ledger_accounts", ["active"], name: "index_ledger_accounts_on_active", using: :btree

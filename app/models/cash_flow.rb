@@ -7,12 +7,16 @@ class CashFlow < ActiveRecord::Base
   validates_presence_of :cashier
   validates_presence_of :member
   validates_presence_of :ledger_account
-  validates_presence_of :form_of_payment
 
-  validates :type, presence: true, length: {is: 1}
+  validates :flow_type, presence: true, length: {is: 1}
   validates :value, presence: true
-  validates :description, presence: true, length: {in: 2..30}
-  
+  validates :description, presence: true
+
   acts_as_paranoid
+
+  def launch
+    Cashier.cash_update(self.cashier_id, self.flow_type, self.value)
+    self.save
+  end
 
 end
