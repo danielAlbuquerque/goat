@@ -9,27 +9,25 @@ Rails.application.routes.draw do
 
   #resources
   resource :member_session, only: [:create, :new, :destroy]
-
-
-  #Root route
-  root 'home#index'
+  resource :member, as: 'account'
+  resources :member_sessions
+  resources :members do
+    resources :dependents
+  end
 
   #Authlogic
-  resources :member_sessions
   get 'login' => "member_sessions#new", as: :login
   get 'logout' => "member_sessions#destroy", as: :logout
   post '/member_sessions/create'
-  resources :members
-  resource :member, as: 'account'
   get 'signup' => 'users#new', as: :signup
-
-
-
 
   #Custom routes
 
   #Members
   get 'membros' => "members#index", as: :membros
   get 'novo-membro' => 'members#new', as: "novo-mebro"
+
+  #Root route
+  root 'home#index'
 
 end

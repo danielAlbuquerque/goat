@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_member_session, :current_member, :set_current_member, :check_admin
-  before_filter :set_current_member
+  before_filter :set_current_member, :init
 
   private
     #Auth
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
 
     def set_current_member
-      Member.current = current_member
+      Member.current ||= current_member
     end
 
     def redirect_back_or_default(default)
@@ -33,12 +33,22 @@ class ApplicationController < ActionController::Base
       session[:return_to] = nil
     end
 
-
     #Access Control
     def check_admin
       unless Member.current.is_admin
         AccessDenied.create member: Member.current, log: request.original_url
         redirect_to root_path, notice: "Acesso negado"
+      end
+    end
+
+    #Global config
+    def init
+      @title ||= "SiSBODE | Gestão de loja maçonica"
+
+      if current_member
+        @clss = "skin-blue sidebar-mini"
+      else
+        @clss = "login-page"
       end
     end
 

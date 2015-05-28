@@ -17,6 +17,7 @@ class MemberSessionsController < ApplicationController
   end
 
   def destroy
+    Member.current = nil
   	current_member_session.destroy
   	redirect_to login_path
   end

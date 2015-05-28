@@ -1,141 +1,195 @@
-<%= render "shared/error_messages", target: @member %>
-
-<p>
-<%= form.label :cim %><br />
-<%= form.text_field :cim %>
-</p>
-
-<p>
-<%= form.label :first_name %><br />
-<%= form.text_field :first_name %>
-</p>
-
-<p>
-<%= form.label :last_name %><br />
-<%= form.text_field :last_name %>
-</p>
-
-<p>
-<%= form.label :email %><br />
-<%= form.text_field :email %>
-</p>
-
-<p>
-<%= form.label :secondary_email %><br />
-<%= form.text_field :secondary_email %>
-</p>
-
-<p>
-<%= form.label :cpf %><br />
-<%= form.text_field :cpf %>
-</p>
-
-<p>
-<%= form.label :rg %><br />
-<%= form.text_field :rg %>
-</p>
-
-<p>
-<%= form.label :birth_date %><br />
-<%= form.text_field :birth_date %>
-</p>
-
-<p>
-<%= form.label :workplace_company %><br />
-<%= form.text_field :workplace_company %>
-</p>
-
-<p>
-<%= form.label :profession_company %><br />
-<%= form.text_field :profession_company %>
-</p>
-
-<p>
-<%= form.label :degree_id %><br />
-<%= form.text_field :degree_id %>
-</p>
-
-<p>
-<%= form.label :initiation_date %><br />
-<%= form.text_field :initiation_date %>
-</p>
-
-<p>
-<%= form.label :monthly_payment %><br />
-<%= form.text_field :monthly_payment %>
-</p>
-
-<p>
-<%= form.label :day_monthly_payment %><br />
-<%= form.text_field :day_monthly_payment %>
-</p>
-
-<p>
-<%= form.label :marital_status %><br />
-<%= form.text_field :marital_status %>
-</p>
-
-<p>
-<%= form.label :phone1 %><br />
-<%= form.text_field :phone1 %>
-</p>
+<div class="nav-tabs-custom">
+      <ul class="nav nav-tabs pull-right">
+        <li><a href="#tab_3" data-toggle="tab">Profissional</a></li>
+        <li><a href="#tab_2" data-toggle="tab">Endereço</a></li>
+        <li class="active"><a href="#tab_1" data-toggle="tab">Informações gerais</a></li>
+        <li class="pull-left header"><i class="fa fa-th"></i> Formulário de cadastro de membro</li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab_1">
 
 
+            <div class="row">
+              <div class="col-xs-2">
+                <label>CIM:</label>
+                <%= form.text_field :cim, class: "form-control", placeholder: "Informe o cim..."%>
+              </div>
+              <div class="col-xs-5">
+                <label>Nome:</label>
+                <%= form.text_field :first_name, class: "form-control", placeholder: "Primeiro nome..."%>
+              </div>
+              <div class="col-xs-5">
+                <label>Sobrenome:</label>
+                <%= form.text_field :last_name, class: "form-control", placeholder: "Sobrenome..."%>
+              </div>
+            </div>
+
+            <br>
+
+
+            <div class="row">
+              <div class="col-xs-2">
+                <label>RG:</label>
+                <%= form.text_field :rg, class: "form-control", placeholder: "Informe o RG..."%>
+              </div>
+              <div class="col-xs-3">
+                <label>CPF:</label>
+                <%= form.text_field :cpf, class: "form-control", placeholder: "Informe o CPF..."%>
+              </div>
+              <div class="col-xs-2">
+                <label>Data nascimento:</label>
+                <%= form.text_field :birth_date, class: "form-control", placeholder: "Nascimento..."%>
+              </div>
+              <div class="col-xs-5">
+                <label>Grau:</label>
+                <%= form.collection_select :degree_id, @degrees, :id, :description, {}, {class: "form-control"} %>
+              </div>
+            </div>
+
+            <br>
+
+
+            <div class="row">
+              <div class="col-xs-2">
+                <label>Estado civíl:</label>
+                <%= form.select :marital_status, [['Solteiro', 'Solteiro'], ['Casado', 'Casado'], ['Viúvo', 'Viúvo'], ['Separado', 'Separado']], {}, {class: "form-control"} %>
+              </div>
+
+              <div class="col-xs-4">
+                <label>Cargo na loja:</label>
+                <%= form.collection_select :position_held_id, @position_helds, :id, :description, {}, {class: "form-control"} %>
+              </div>
+
+              <div class="col-xs-2">
+                <label>Data iniciação:</label>
+                <%= form.text_field :initiation_date, class: "form-control" %>
+              </div>
+
+              <div class="col-xs-2">
+                <label>Valor da mensalidade:</label>
+                <%= form.text_field :monthly_payment, class: "form-control" %>
+              </div>
+
+              <div class="col-xs-2">
+                <label>Dia do vencimento::</label>
+                <%= form.text_field :day_monthly_payment, class: "form-control" %>
+              </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+              <div class="col-xs-4">
+                <label>E-Mail principal:</label>
+                <%= form.text_field :email, class: "form-control", placeholder: "Email principal..."%>
+              </div>
+
+              <div class="col-xs-4">
+                <label>E-Mail secundário:</label>
+                <%= form.text_field :secondary_email, class: "form-control", placeholder: "Email secundário..."%>
+              </div>
+
+              <div class="col-xs-2">
+                <label>Telefone principal:</label>
+                <%= form.text_field :phone1, class: "form-control", placeholder: "Email principal..."%>
+              </div>
+
+              <div class="col-xs-2">
+                <label>Telefone secundário:</label>
+                <%= form.text_field :phone2, class: "form-control", placeholder: "Email secundário..."%>
+              </div>
+            </div>
+
+            <br>
+            <legend>Perfil do sistema</legend>
+            <div class="row">
+              <%if form.object.new_record?%>
+              <div class="col-xs-2">
+                <%= form.label "Senha:" %><br />
+                <%= form.password_field :password, class: "form-control" %>
+                <%= form.label "Confirme a senha:" %><br />
+                <%= form.password_field :password_confirmation, class: "form-control" %>
+              </div>
+              <% end %>
+
+              <div class="col-xs-4">
+                <label for="exampleInputFile">Foto</label>
+                <%= form.file_field :avatar %>
+                <p class="help-block">Essa será a foto do perfil do membro.</p>
+                <div class="col-xs-12">
+                  <label>
+                    <%= form.check_box :is_admin %> O Membro será administrador do sistema.
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-xs-4">
+                <div class="col-xs-12">
+                  <label>
+                    <%= form.check_box :active %> O Membro está ativo.
+                  </label>
+                </div>
+              </div>
+
+            </div>
 
 
 
-<p>
-<%= form.label :birth_uf %><br />
-<%= form.text_field :birth_uf %>
-</p>
-
-<p>
-<%= form.label :birth_city %><br />
-<%= form.text_field :birth_city %>
-</p>
 
 
-<p>
-<%= form.label :address_uf %><br />
-<%= form.text_field :address_uf %>
-</p>
+        </div><!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_2">
+          <div class="row">
+            <div class="col-xs-2">
+                <label>UF:</label>
+                <%= form.text_field :address_uf, class: "form-control", maxlength: "2", placeholder: "UF..." %>
+            </div>
 
-<p>
-<%= form.label :address_city %><br />
-<%= form.text_field :address_city %>
-</p>
+            <div class="col-xs-3">
+                <label>Cidade:</label>
+                <%= form.text_field :address_city, class: "form-control", placeholder: "Cidade..." %>
+            </div>
 
-<p>
-<%= form.label :neighborhood %><br />
-<%= form.text_field :neighborhood %>
-</p>
+            <div class="col-xs-5">
+                <label>Bairro:</label>
+                <%= form.text_field :neighborhood, class: "form-control", placeholder: "Bairro..." %>
+            </div>
 
-<p>
-<%= form.label :address_number %><br />
-<%= form.text_field :address_number %>
-</p>
+            <div class="col-xs-2">
+                <label>CEP:</label>
+                <%= form.text_field :zipcode, class: "form-control", placeholder: "CEP..." %>
+            </div>
+          </div>
+          <br>
 
-<p>
-<%= form.label :address %><br />
-<%= form.text_field :address %>
-</p>
+          <div class="row">
+            <div class="col-xs-8">
+                <label>Endereço:</label>
+                <%= form.text_field :address, class: "form-control", placeholder: "Informe o endereço completo..." %>
+            </div>
+            <div class="col-xs-2">
+                <label>Número:</label>
+                <%= form.text_field :address_number, class: "form-control", placeholder: "Número..." %>
+            </div>
+            <div class="col-xs-2">
+                <label>Complemento:</label>
+                <%= form.text_field :complement, class: "form-control", placeholder: "Complemento..." %>
+            </div>
+          </div>
+        </div><!-- /.tab-pane -->
+        <div class="tab-pane" id="tab_3">
+          <div class="row">
+            <div class="col-xs-8">
+                <label>Empresa:</label>
+                <%= form.text_field :workplace_company, class: "form-control", placeholder: "Nome da empresa..." %>
+            </div>
 
-<p>
-<%= form.label :complement %><br />
-<%= form.text_field :complement %>
-</p>
+            <div class="col-xs-4">
+                <label>Função:</label>
+                <%= form.text_field :profession_company, class: "form-control", placeholder: "Cargo na empresa..." %>
+            </div>
 
-<p>
-<%= form.label :zipcode %><br />
-<%= form.text_field :zipcode %>
-</p>
-
-
-<p>
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
-<%= form.password_field :password %>
-</p>
-<p>
-<%= form.label :password_confirmation %><br />
-<%= form.password_field :password_confirmation %>
-</p>
+          </div>
+        </div><!-- /.tab-pane -->
+      </div><!-- /.tab-content -->
+    </div><!-- nav-tabs-custom -->

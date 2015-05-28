@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150524200139) do
+ActiveRecord::Schema.define(version: 20150527193747) do
 
   create_table "access_denieds", force: :cascade do |t|
     t.integer  "member_id",  limit: 4
@@ -247,8 +247,6 @@ ActiveRecord::Schema.define(version: 20150524200139) do
     t.string   "marital_status",      limit: 20,                                 null: false
     t.string   "phone1",              limit: 30,                                 null: false
     t.string   "phone2",              limit: 30
-    t.string   "birth_uf",            limit: 2,                                  null: false
-    t.string   "birth_city",          limit: 30,                                 null: false
     t.string   "address_uf",          limit: 2,                                  null: false
     t.string   "address_city",        limit: 30,                                 null: false
     t.string   "neighborhood",        limit: 50,                                 null: false

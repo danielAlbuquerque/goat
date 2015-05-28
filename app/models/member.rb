@@ -1,5 +1,8 @@
 class Member < ActiveRecord::Base
 
+  #Paranoid
+  acts_as_paranoid
+
   #Avatar
   mount_uploader :avatar, AvatarUploader
 
@@ -17,22 +20,20 @@ class Member < ActiveRecord::Base
   has_many :bill_to_pays
   has_many :bill_to_receives
   has_and_belongs_to_many :sessions
-  acts_as_paranoid
+
 
   # Presence, Unique and length
-  validates :cim, length: {in: 2..25}, presence: true, uniqueness: true
+  validates :cim, length: {in: 2..25}, presence: true, uniqueness: true, numericality: true
   validates :first_name, length: {in: 2..50}, presence: true
   validates :last_name, length: {in: 2..50}, presence: true
   validates :email, length: {in: 2..150}, presence: true, uniqueness: true
   validates :secondary_email, length: {in: 2..150}
   validates :cpf, presence: true, uniqueness: true, length: {is: 14}
-  validates :rg, presence: true, uniqueness: true
+  validates :rg, presence: true, uniqueness: true, numericality: true
   validates :workplace_company, length: {in: 2..50}
   validates :profession_company, length: {in: 2..50}
   validates :monthly_payment, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: {greater_than: 0, less_than: 9999999}
   validates :day_monthly_payment, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: {greater_than: 0, less_than: 31}
-  validates :birth_uf, presence: true, length: {is: 2}
-  validates :birth_city, presence: true, length: {in: 2..30}
   validates :address_uf, presence: true, length: {is: 2}
   validates :address_city, presence: true, length: {in: 2..30}
   validates :neighborhood, presence: true, length: {in: 2..50}
@@ -44,15 +45,12 @@ class Member < ActiveRecord::Base
   validates_presence_of :phone1
   validates_presence_of :marital_status
   validates_presence_of :birth_date
-  validates_presence_of :birth_uf
-  validates_presence_of :degree
   validates_presence_of :initiation_date
-
+  validates_presence_of :degree
 
   # Email Format validation
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   validates_format_of :secondary_email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-
 
   #Authlogic
   acts_as_authentic do |c|
@@ -61,6 +59,12 @@ class Member < ActiveRecord::Base
     c.crypto_provider = Authlogic::CryptoProviders::BCrypt
   end
 
+  # Scoped Querys
+  scope :actives,     lambda { where(active: true).order(:first_name) }
+  scope :inactives,   lambda { where(active: false).order(:first_name) }
+  scope :all_members, lambda { order(:first_name) }
+
+  #static methods
   def self.current
     Thread.current[:member]
   end
@@ -69,6 +73,14 @@ class Member < ActiveRecord::Base
     Thread.current[:member] = member
   end
 
+  def self.search(search)
+    query = "where first_name like '%#{search}%' or
+            last_name like '%#{search}%' or cim like '%#{search}%'
+            or cpf like '%#{search}%'"
+    where(query)
+  end
+
+  #public methods
   def set_avatar
     avatar = "/content/dist/img/user2-160x160.jpg"  unless avatar
   end
