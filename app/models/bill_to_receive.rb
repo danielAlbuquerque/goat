@@ -3,4 +3,9 @@ class BillToReceive < ActiveRecord::Base
   belongs_to :member
   belongs_to :ledger_account
   acts_as_paranoid
+
+
+
+
+
 end

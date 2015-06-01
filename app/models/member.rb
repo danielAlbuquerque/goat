@@ -24,13 +24,13 @@ class Member < ActiveRecord::Base
 
 
   # Presence, Unique and length
-  validates :cim, length: {in: 2..25}, presence: true, uniqueness: true, numericality: true
+  validates :cim, length: {in: 2..25}, presence: true, numericality: true
   validates :first_name, length: {in: 2..50}, presence: true
   validates :last_name, length: {in: 2..50}, presence: true
-  validates :email, length: {in: 2..150}, presence: true, uniqueness: true
+  validates :email, length: {in: 2..150}, presence: true
   validates :secondary_email, length: {in: 2..150}
-  validates :cpf, presence: true, uniqueness: true, length: {is: 14}
-  validates :rg, presence: true, uniqueness: true, numericality: true
+  validates :cpf, presence: true, length: {is: 14}
+  validates :rg, presence: true, numericality: true
   validates :workplace_company, length: {in: 2..50}
   validates :profession_company, length: {in: 2..50}
   validates :monthly_payment, format: { with: /\A\d+(?:\.\d{0,2})?\z/ }, numericality: {greater_than: 0, less_than: 9999999}
@@ -40,7 +40,6 @@ class Member < ActiveRecord::Base
   validates :neighborhood, presence: true, length: {in: 2..50}
   validates :address_number, length: {in: 2..20}
   validates :address, length: {in: 2..200}, presence: true
-  validates :complement, length: {in: 2..200}
   validates :zipcode, length: {in: 2..20}
 
   validates_presence_of :phone1
@@ -83,7 +82,7 @@ class Member < ActiveRecord::Base
   end
 
   def self.pendent_payments
-    
+
   end
 
   #public methods

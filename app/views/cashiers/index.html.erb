@@ -128,8 +128,6 @@
                               <label>Data:</label>
                               <%= f.text_field :when, class: "form-control", placeholder: "Data..." %>
                             </div>
-
-
                           </div>
                           <div class="row">
                             <div class="col-xs-4">
@@ -140,16 +138,16 @@
                               <label>Descrição:</label>
                               <%= f.text_field :description, class: "form-control", placeholder: "Descrição do lançamento..."%>
                             </div>
-
                           </div>
                           <hr>
                           <%= f.hidden_field :cashier_id, value: @current.id %>
+
                           <%= link_to "Cancelar", :back, class: "btn btn-danger btn-flat" %>
                           <%= f.submit "Salvar", class: "btn btn-primary btn-flat"%>
-                        </div><!-- /.box-body -->
-                      </div><!-- /.box -->
+                        </div>
+                      </div>
                     <% end %>
-                  </div><!-- /.tab-pane -->
+                  </div>
                   <% end %>
                   <div class="tab-pane" id="tab_3">
                     <% if @closed.present? %>
@@ -161,14 +159,13 @@
                           <th>Descrição</th>
                           <th>Data fechamento</th>
                         </tr>
-
                         <% @closed.each do |c| %>
                           <tr>
-                            <td><%=format_date c.created_at %></td>
-                            <td>R$ <%=c.open_with_value %></td>
-                            <td>R$ <%=c.current_cash%></td>
-                            <td><%=c.description%></td>
-                            <td><%=format_date c.closed_at%></td>
+                            <td>   <%=format_date c.created_at%> </td>
+                            <td>R$ <%=c.open_with_value%>        </td>
+                            <td>R$ <%=c.current_cash%>           </td>
+                            <td>   <%=c.description%>            </td>
+                            <td>   <%=format_date c.closed_at%>  </td>
                           </tr>
                         <% end %>
                       </table>

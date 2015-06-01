@@ -34,15 +34,15 @@
               </div>
               <div class="col-xs-3">
                 <label>CPF:</label>
-                <%= form.text_field :cpf, class: "form-control", placeholder: "Informe o CPF..."%>
+                <%= form.text_field :cpf, class: "form-control", placeholder: "Informe o CPF...", "data-mask": "000.000.000-00"%>
               </div>
               <div class="col-xs-2">
                 <label>Data nascimento:</label>
-                <%= form.text_field :birth_date, class: "form-control", placeholder: "Nascimento..."%>
+                <%= form.text_field :birth_date, class: "form-control", placeholder: "Nascimento...", id: "date", "data-mask": "00/00/0000"%>
               </div>
               <div class="col-xs-5">
                 <label>Grau:</label>
-                <%= form.collection_select :degree_id, @degrees, :id, :description, {}, {class: "form-control"} %>
+                <%= form.collection_select :degree_id, @degrees, :id, :description, { :prompt => 'Selecione o grau' }, {class: "form-control"} %>
               </div>
             </div>
 
@@ -57,22 +57,22 @@
 
               <div class="col-xs-4">
                 <label>Cargo na loja:</label>
-                <%= form.collection_select :position_held_id, @position_helds, :id, :description, {}, {class: "form-control"} %>
+                <%= form.collection_select :position_held_id, @position_helds, :id, :description, { prompt: 'Selecione um cargo(não obrigatório)' }, {class: "form-control"} %>
               </div>
 
               <div class="col-xs-2">
                 <label>Data iniciação:</label>
-                <%= form.text_field :initiation_date, class: "form-control" %>
+                <%= form.text_field :initiation_date, class: "form-control", "data-mask": "00/00/0000" %>
               </div>
 
               <div class="col-xs-2">
                 <label>Valor da mensalidade:</label>
-                <%= form.text_field :monthly_payment, class: "form-control" %>
+                <%= form.text_field :monthly_payment, class: "form-control", "data-mask": "000.000.000.000.000,00" %>
               </div>
 
               <div class="col-xs-2">
                 <label>Dia do vencimento::</label>
-                <%= form.text_field :day_monthly_payment, class: "form-control" %>
+                <%= form.text_field :day_monthly_payment, class: "form-control", maxlength: "2" %>
               </div>
             </div>
 
@@ -91,12 +91,12 @@
 
               <div class="col-xs-2">
                 <label>Telefone principal:</label>
-                <%= form.text_field :phone1, class: "form-control", placeholder: "Email principal..."%>
+                <%= form.text_field :phone1, class: "form-control", placeholder: "Telefone principal...", "data-mask": "(00)0000-0000)"%>
               </div>
 
               <div class="col-xs-2">
                 <label>Telefone secundário:</label>
-                <%= form.text_field :phone2, class: "form-control", placeholder: "Email secundário..."%>
+                <%= form.text_field :phone2, class: "form-control", placeholder: "Telefone secundário...", "data-mask": "(00)0000-0000)"%>
               </div>
             </div>
 
@@ -157,7 +157,7 @@
 
             <div class="col-xs-2">
                 <label>CEP:</label>
-                <%= form.text_field :zipcode, class: "form-control", placeholder: "CEP..." %>
+                <%= form.text_field :zipcode, class: "form-control", placeholder: "CEP...", "data-mask": "00000-000" %>
             </div>
           </div>
           <br>

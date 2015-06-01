@@ -1,0 +1,45 @@
+
+
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Visualizar dependente
+      <small>cadastro de dependentes</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> Membros</a></li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> Dependentes</a></li>
+      <li class="active">Visualizar</li>
+    </ol>
+  </section>
+
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title"><b>Membro:</b> <%=@member.first_name%> <%=@member.last_name%></h3>
+            <div class="box-tools">
+
+            </div>
+          </div><!-- /.box-header -->
+
+          <div class="box-body">
+            <p><b>Nome:</b> <%=@dependent.full_name%> </p>
+            <p><b>Parentesco:</b> <%=@dependent.relationship%> </p>
+            <p><b>RG:</b> <%=@dependent.rg%> </p>
+            <p><b>CPF:</b> <%=@dependent.cpf%> </p>
+            <p><b>Data nascimento:</b> <%=format_date @dependent.birth_date%> </p>
+          </div>
+
+          <div class="box-footer clearfix">
+            <small><b>Cadastro em: </b> <%=format_date_time @dependent.created_at%>; <b>Última atualização:</b> <%=format_date_time @dependent.updated_at%></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+</div>

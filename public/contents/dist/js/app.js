@@ -1,16 +1,3 @@
-/*! AdminLTE app.js
- * ================
- * Main JS application file for AdminLTE v2. This file
- * should be included in all pages. It controls some layout
- * options and implements exclusive AdminLTE plugins.
- *
- * @Author  Almsaeed Studio
- * @Support <http://www.almsaeedstudio.com>
- * @Email   <support@almsaeedstudio.com>
- * @version 2.1.0
- * @license MIT <http://opensource.org/licenses/MIT>
- */
-
 'use strict';
 
 //Make sure jQuery has been loaded before app.js
@@ -136,6 +123,12 @@ $.AdminLTE.options = {
  * options above.
  */
 $(function () {
+
+  $(function () {
+    $('#date').mask('00/00/0000');
+  });
+
+
   //Extend options if external options exist
   if (typeof AdminLTEOptions !== "undefined") {
     $.extend(true,
@@ -458,7 +451,7 @@ function _init() {
       var bg = $(".control-sidebar-bg");
       _this._fix(bg);
 
-      //If the body has a fixed layout, make the control sidebar fixed      
+      //If the body has a fixed layout, make the control sidebar fixed
       if ($('body').hasClass('fixed')) {
         _this._fixForFixed(sidebar);
       } else {
@@ -475,7 +468,7 @@ function _init() {
       if (slide) {
         sidebar.addClass('control-sidebar-open');
       } else {
-        //Push the content by adding the open class to the body instead 
+        //Push the content by adding the open class to the body instead
         //of the sidebar itself
         $('body').addClass('control-sidebar-open');
       }

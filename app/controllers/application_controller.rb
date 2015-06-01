@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       @title ||= "SiSBODE | Gestão de loja maçonica"
 
       if current_member
-        @clss = "skin-blue sidebar-mini"
+        @clss = "skin-black-light sidebar-mini"
       else
         @clss = "login-page"
       end

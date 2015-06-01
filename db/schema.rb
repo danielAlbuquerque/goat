@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150528225833) do
+ActiveRecord::Schema.define(version: 20150531191947) do
 
   create_table "access_denieds", force: :cascade do |t|
     t.integer  "member_id",  limit: 4
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150528225833) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.datetime "deleted_at"
+    t.string   "monthly_ref",         limit: 6
   end
 
   add_index "bill_to_pays", ["deleted_at"], name: "index_bill_to_pays_on_deleted_at", using: :btree
@@ -74,6 +75,8 @@ ActiveRecord::Schema.define(version: 20150528225833) do
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.datetime "deleted_at"
+    t.date     "date_to_payment"
+    t.string   "monthly_ref",         limit: 6
   end
 
   add_index "bill_to_receives", ["deleted_at"], name: "index_bill_to_receives_on_deleted_at", using: :btree
@@ -219,6 +222,20 @@ ActiveRecord::Schema.define(version: 20150528225833) do
 
   add_index "ledger_accounts", ["active"], name: "index_ledger_accounts_on_active", using: :btree
   add_index "ledger_accounts", ["deleted_at"], name: "index_ledger_accounts_on_deleted_at", using: :btree
+
+  create_table "member_monthly_payments", force: :cascade do |t|
+    t.string   "reference",        limit: 6,                              null: false
+    t.string   "processed_by",     limit: 100,                            null: false
+    t.decimal  "total_to_receive",             precision: 10,             null: false
+    t.decimal  "total_received",               precision: 10, default: 0, null: false
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
+    t.datetime "deleted_at"
+    t.integer  "total_processed",  limit: 4,                  default: 0
+  end
+
+  add_index "member_monthly_payments", ["created_at"], name: "index_member_monthly_payments_on_created_at", using: :btree
+  add_index "member_monthly_payments", ["reference"], name: "index_member_monthly_payments_on_reference", using: :btree
 
   create_table "member_session", force: :cascade do |t|
     t.string   "session_id", limit: 255,   null: false
